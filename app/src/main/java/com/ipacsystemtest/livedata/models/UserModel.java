@@ -6,9 +6,8 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class UserModel {
-    @NonNull
-    @PrimaryKey
-    private String user_id;
+    @PrimaryKey(autoGenerate = true)
+    private int user_id;
     private String user_name;
     private String user_gender;
     private String user_location;
@@ -16,12 +15,11 @@ public class UserModel {
     public UserModel() {
     }
 
-    @NonNull
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(@NonNull String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 

@@ -1,29 +1,22 @@
-package com.ipacsystemtest.livedata.db;
+package com.ipacsystemtest.livedata.db
 
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Update;
-
-import com.ipacsystemtest.livedata.models.UserModel;
-
-import java.util.List;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Update
+import com.ipacsystemtest.livedata.models.UserModel
 
 /**
  * Created by Shankar
  */
-
 @Dao
-public interface UserDao {
+interface UserDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveAll(users: List<UserModel?>?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveAll(List<UserModel> users);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void save(UserModel post);
+    suspend fun save(post: UserModel?)
 
     @Update
-    void update(UserModel post);
-
+    suspend fun update(post: UserModel?)
 }
