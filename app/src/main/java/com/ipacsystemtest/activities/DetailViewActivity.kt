@@ -1,8 +1,8 @@
 package com.ipacsystemtest.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
-import com.ipacsystemtest.R
+import androidx.appcompat.app.AppCompatActivity
 import com.ipacsystemtest.databinding.ActivityDetailViewBinding
 import com.ipacsystemtest.rest.api.data.UsersList
 import com.squareup.picasso.Picasso
@@ -10,8 +10,6 @@ import com.squareup.picasso.Picasso
 class DetailViewActivity : AppCompatActivity() {
 
     private var binding: ActivityDetailViewBinding? = null
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,15 +19,15 @@ class DetailViewActivity : AppCompatActivity() {
         initUi()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initUi() {
-        intent.getStringExtra("user_name")?.let { binding?.txtName?.text = it }
-        intent.getStringExtra("user_gender")?.let { binding?.txtGender?.text = it }
-        intent.getStringExtra("user_location")?.let { binding?.txtLocation?.text = it }
-
-
-        intent.getStringExtra("user_picture")?.let {  Picasso.get()
-            .load(it)
-            .into(binding?.imgUserImage)}
+        val user = intent.getSerializableExtra("user") as? UsersList.User
+        binding?.txtName?.text = user?.name?.first + " " + user?.name?.last
+        binding?.txtGender?.text = user?.gender
+        binding?.txtLocation?.text = user?.location?.city + " " + user?.location?.state
+        Picasso.get()
+            .load(user?.picture?.large)
+            .into(binding?.imgUserImage)
     }
 
 

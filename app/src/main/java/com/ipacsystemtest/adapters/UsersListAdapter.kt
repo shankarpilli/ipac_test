@@ -57,6 +57,7 @@ class UsersListAdapter(
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.txt_user_name.text = results[position].name.first + " " + results[position].name.last
         viewHolder.txt_gender.text = results[position].gender
@@ -66,10 +67,7 @@ class UsersListAdapter(
             .into(viewHolder.img_user)
         viewHolder.ll_item.setOnClickListener {
             val intent = Intent(activity, DetailViewActivity::class.java)
-            intent.putExtra("user_name", viewHolder.txt_user_name.text)
-            intent.putExtra("user_gender", viewHolder.txt_gender.text)
-            intent.putExtra("user_location", viewHolder.txt_location.text)
-            intent.putExtra("user_picture", results[position].picture.large)
+            intent.putExtra("user", results[position])
             activity?.startActivity(intent)
         }
     }

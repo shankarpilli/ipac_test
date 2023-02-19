@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ipacsystemtest.adapters.UsersListAdapter
 import com.ipacsystemtest.custom.CustomProgressDialog
 import com.ipacsystemtest.databinding.ActivityMainBinding
@@ -50,21 +51,22 @@ class MainActivity : AppCompatActivity() {
                 displayList(it)
             }
         }
-        /*binding?.rlUsersList?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
+        binding?.rlUsersList?.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visibleItemCount = layoutManager.childCount
+                val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
+                val total = adapter.itemCount
 
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
+                if (!isLoading) {
 
-            override fun loadMoreItems() {
-                this@MainActivity.isLoading = true
-                page++
-                getUserList(page*20)
+                    if ((visibleItemCount + pastVisibleItem) >= total) {
+                        page++
+                        getUserList(page * 20)
+                    }
+                }
+                super.onScrolled(recyclerView, dx, dy)
             }
-        })*/
+        })
         getUserList(page * 20)
     }
 
